@@ -228,7 +228,7 @@ namespace Test_Askon_Smirkin
 
                     // Обновление данных в DataGridView после удаления строки из базы данных
                     RefreshDataGrid(dataGridView);
-
+                    InitializeTree();
                 }
             }
         }
@@ -346,9 +346,12 @@ namespace Test_Askon_Smirkin
         {
             int rowCount = Math.Max(dataGridView1.Rows.Count, Math.Max(dataGridView2.Rows.Count, dataGridView3.Rows.Count));
 
-            var objects = new List<ObjectData>();
-            var links = new List<LinksData>();
-            var attributes = new List<AttributesData>();
+            var jsonData = new
+            {
+                Objects = new List<ObjectData>(),
+                Links = new List<LinksData>(),
+                Attributes = new List<AttributesData>()
+            };
 
             for (int i = 0; i < rowCount; i++)
             {
@@ -371,7 +374,7 @@ namespace Test_Askon_Smirkin
                         Type = type,
                         Product = product
                     };
-                    objects.Add(obj);
+                    jsonData.Objects.Add(obj);
                 }
 
                 if (id_parent != null && id_child != null)
@@ -381,7 +384,7 @@ namespace Test_Askon_Smirkin
                         ID_parent = id_parent,
                         ID_child = id_child
                     };
-                    links.Add(lnks);
+                    jsonData.Links.Add(lnks);
                 }
 
                 if (id_3 != null && name != null && value != null)
@@ -392,19 +395,16 @@ namespace Test_Askon_Smirkin
                         name = name,
                         value = value
                     };
-                    attributes.Add(attr);
+                    jsonData.Attributes.Add(attr);
                 }
             }
 
-            var json_1 = JsonConvert.SerializeObject(objects, Formatting.Indented);
-            File.WriteAllText(fileName, json_1);
-            var json_2 = JsonConvert.SerializeObject(links, Formatting.Indented);
-            File.WriteAllText(fileName, json_2);
-            var json_3 = JsonConvert.SerializeObject(attributes, Formatting.Indented);
-            File.WriteAllText(fileName, json_3);
+            var json = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
+            File.WriteAllText(fileName, json);
 
             MessageBox.Show("Data saved to JSON file successfully!", "Save to JSON", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private void сохранитьXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
