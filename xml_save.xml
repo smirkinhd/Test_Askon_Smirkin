@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjectData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ObjectData>
+    <ID>0</ID>
+    <Type>Сборочная единица</Type>
+    <Product>СЕ.1235.00.00.000</Product>
+  </ObjectData>
+  <ObjectData>
+    <ID>1</ID>
+    <Type>Деталь</Type>
+    <Product>СЕ.1235.01.00.001</Product>
+  </ObjectData>
+  <ObjectData>
+    <ID>2</ID>
+    <Type>Материал по КД</Type>
+    <Product>Сталь 09Г2С</Product>
+  </ObjectData>
+  <ObjectData>
+    <ID>3</ID>
+    <Type>Документ</Type>
+    <Product>СЕ.1235.01.01.000 ВП</Product>
+  </ObjectData>
+  <ObjectData>
+    <ID>4</ID>
+    <Type>Кирпич</Type>
+    <Product>с3-лб 773-5</Product>
+  </ObjectData>
+</ArrayOfObjectData><?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLinksData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LinksData>
+    <ID_parent>0</ID_parent>
+    <ID_child>1</ID_child>
+  </LinksData>
+  <LinksData>
+    <ID_parent>1</ID_parent>
+    <ID_child>2</ID_child>
+  </LinksData>
+  <LinksData>
+    <ID_parent>1</ID_parent>
+    <ID_child>3</ID_child>
+  </LinksData>
+  <LinksData>
+    <ID_parent>1</ID_parent>
+    <ID_child>4</ID_child>
+  </LinksData>
+</ArrayOfLinksData><?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAttributesData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AttributesData>
+    <objectID>0</objectID>
+    <name>Наименование</name>
+    <value>Фланец</value>
+  </AttributesData>
+  <AttributesData>
+    <objectID>0</objectID>
+    <name>Раздел спецификации</name>
+    <value>Сборочные единицы</value>
+  </AttributesData>
+  <AttributesData>
+    <objectID>3</objectID>
+    <name>Марка материала</name>
+    <value>Сталь 09Г2С</value>
+  </AttributesData>
+</ArrayOfAttributesData>

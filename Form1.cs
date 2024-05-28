@@ -211,13 +211,6 @@ namespace Test_Askon_Smirkin
                         deleteQuery = $"DELETE FROM {tableName} WHERE id = {id}";
                         Console.WriteLine("Сработал метод для объекта");
                     }
-                    else if (tableName == "Links")
-                    {
-                        // Удаление строки из таблицы Links по parentId
-                        dataGridView.Rows[index].Cells[2].Value = RowState.Deleted;
-                        deleteQuery = $"DELETE FROM {tableName} WHERE parentId = {id}";
-                        Console.WriteLine("Сработал метод для Links");
-                    }
                     else if (tableName == "Attributes")
                     {
                         dataGridView.Rows[index].Cells[3].Value = RowState.Deleted;
@@ -235,6 +228,7 @@ namespace Test_Askon_Smirkin
 
                     // Обновление данных в DataGridView после удаления строки из базы данных
                     RefreshDataGrid(dataGridView);
+
                 }
             }
         }
@@ -350,24 +344,24 @@ namespace Test_Askon_Smirkin
 
         private void SaveToJson(string fileName)
         {
+            int rowCount = Math.Max(dataGridView1.Rows.Count, Math.Max(dataGridView2.Rows.Count, dataGridView3.Rows.Count));
+
             var objects = new List<ObjectData>();
             var links = new List<LinksData>();
             var attributes = new List<AttributesData>();
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < rowCount; i++)
             {
-                if (dataGridView1.Rows[i].IsNewRow) continue;
+                var id_1 = i < dataGridView1.Rows.Count ? dataGridView1.Rows[i].Cells[0].Value?.ToString() : null;
+                var type = i < dataGridView1.Rows.Count ? dataGridView1.Rows[i].Cells[1].Value?.ToString() : null;
+                var product = i < dataGridView1.Rows.Count ? dataGridView1.Rows[i].Cells[2].Value?.ToString() : null;
 
-                var id_1 = dataGridView1.Rows[i].Cells[0].Value?.ToString();
-                var type = dataGridView1.Rows[i].Cells[1].Value?.ToString();
-                var product = dataGridView1.Rows[i].Cells[2].Value?.ToString();
+                var id_parent = i < dataGridView2.Rows.Count ? dataGridView2.Rows[i].Cells[0].Value?.ToString() : null;
+                var id_child = i < dataGridView2.Rows.Count ? dataGridView2.Rows[i].Cells[1].Value?.ToString() : null;
 
-                var id_parent = dataGridView2.Rows[i].Cells[0].Value?.ToString();
-                var id_child = dataGridView2.Rows[i].Cells[1].Value?.ToString();
-
-                var id_3 = dataGridView3.Rows[i].Cells[0].Value?.ToString();
-                var name = dataGridView3.Rows[i].Cells[1].Value?.ToString();
-                var value = dataGridView3.Rows[i].Cells[2].Value?.ToString();
+                var id_3 = i < dataGridView3.Rows.Count ? dataGridView3.Rows[i].Cells[0].Value?.ToString() : null;
+                var name = i < dataGridView3.Rows.Count ? dataGridView3.Rows[i].Cells[1].Value?.ToString() : null;
+                var value = i < dataGridView3.Rows.Count ? dataGridView3.Rows[i].Cells[2].Value?.ToString() : null;
 
                 if (id_1 != null && type != null && product != null)
                 {
@@ -377,21 +371,28 @@ namespace Test_Askon_Smirkin
                         Type = type,
                         Product = product
                     };
+                    objects.Add(obj);
+                }
+
+                if (id_parent != null && id_child != null)
+                {
                     var lnks = new LinksData
                     {
                         ID_parent = id_parent,
                         ID_child = id_child
                     };
+                    links.Add(lnks);
+                }
+
+                if (id_3 != null && name != null && value != null)
+                {
                     var attr = new AttributesData
                     {
                         objectID = id_3,
                         name = name,
                         value = value
                     };
-                    objects.Add(obj);
-                    links.Add(lnks);
                     attributes.Add(attr);
-
                 }
             }
 
@@ -417,24 +418,24 @@ namespace Test_Askon_Smirkin
 
         private void ExportToXML(string fileName)
         {
+            int rowCount = Math.Max(dataGridView1.Rows.Count, Math.Max(dataGridView2.Rows.Count, dataGridView3.Rows.Count));
+
             var objects = new List<ObjectData>();
             var links = new List<LinksData>();
             var attributes = new List<AttributesData>();
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < rowCount; i++)
             {
-                if (dataGridView1.Rows[i].IsNewRow) continue;
+                var id_1 = i < dataGridView1.Rows.Count ? dataGridView1.Rows[i].Cells[0].Value?.ToString() : null;
+                var type = i < dataGridView1.Rows.Count ? dataGridView1.Rows[i].Cells[1].Value?.ToString() : null;
+                var product = i < dataGridView1.Rows.Count ? dataGridView1.Rows[i].Cells[2].Value?.ToString() : null;
 
-                var id_1 = dataGridView1.Rows[i].Cells[0].Value?.ToString();
-                var type = dataGridView1.Rows[i].Cells[1].Value?.ToString();
-                var product = dataGridView1.Rows[i].Cells[2].Value?.ToString();
+                var id_parent = i < dataGridView2.Rows.Count ? dataGridView2.Rows[i].Cells[0].Value?.ToString() : null;
+                var id_child = i < dataGridView2.Rows.Count ? dataGridView2.Rows[i].Cells[1].Value?.ToString() : null;
 
-                var id_parent = dataGridView2.Rows[i].Cells[0].Value?.ToString();
-                var id_child = dataGridView2.Rows[i].Cells[1].Value?.ToString();
-
-                var id_3 = dataGridView3.Rows[i].Cells[0].Value?.ToString();
-                var name = dataGridView3.Rows[i].Cells[1].Value?.ToString();
-                var value = dataGridView3.Rows[i].Cells[2].Value?.ToString();
+                var id_3 = i < dataGridView3.Rows.Count ? dataGridView3.Rows[i].Cells[0].Value?.ToString() : null;
+                var name = i < dataGridView3.Rows.Count ? dataGridView3.Rows[i].Cells[1].Value?.ToString() : null;
+                var value = i < dataGridView3.Rows.Count ? dataGridView3.Rows[i].Cells[2].Value?.ToString() : null;
 
                 if (id_1 != null && type != null && product != null)
                 {
@@ -444,23 +445,31 @@ namespace Test_Askon_Smirkin
                         Type = type,
                         Product = product
                     };
+                    objects.Add(obj);
+                }
+
+                if (id_parent != null && id_child != null)
+                {
                     var lnks = new LinksData
                     {
                         ID_parent = id_parent,
                         ID_child = id_child
                     };
+                    links.Add(lnks);
+                }
+
+                if (id_3 != null && name != null && value != null)
+                {
                     var attr = new AttributesData
                     {
                         objectID = id_3,
                         name = name,
                         value = value
                     };
-                    objects.Add(obj);
-                    links.Add(lnks);
                     attributes.Add(attr);
-
                 }
             }
+
 
             var xmlSerializer_1 = new XmlSerializer(typeof(List<ObjectData>));
             var xmlSerializer_2 = new XmlSerializer(typeof(List<LinksData>));
@@ -532,11 +541,6 @@ namespace Test_Askon_Smirkin
         private void save_btn_Links_Click(object sender, EventArgs e)
         {
             Update(dataGridView2, "Links");
-        }
-
-        private void delete_btn_Links_Click(object sender, EventArgs e)
-        {
-            deleteRows(dataGridView2, "Links");
         }
 
         private void del_btn_Attributes_Click(object sender, EventArgs e)
